@@ -1,0 +1,11 @@
+    <ul>
+    {% for content in contents_list %}
+            완료 여부  <input type='checkbox' name='is_checked' value='done'/>
+            시작 날짜 : {{ content.pub_date }}
+            완료 날짜 : {{ content.exp_date }}
+        <li>
+            내용 : {{ content.contents }}
+        </li>
+
+    {% endfor %}
+    </ul>

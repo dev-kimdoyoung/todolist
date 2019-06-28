@@ -1,3 +1,7 @@
 from django.db import models
 
-# Create your models here.
+class TodoList(models.Model):
+    is_Checked = models.IntegerField(default=0)
+    contents = models.CharField(max_length=100)
+    pub_date = models.DateTimeField('published_date')
+    exp_date = models.DateTimeField('expire_date')
