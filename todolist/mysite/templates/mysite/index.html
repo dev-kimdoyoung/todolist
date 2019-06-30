@@ -1,7 +1,8 @@
 
     <ul>
     {% for content in contents_list %}
-            완료 여부  <input type='checkbox' name='is_checked' value='done'/>
+            번호 : {{forloop.counter}}
+            완료 여부  <input type='checkbox' name='is_checked[]' value = {{forloop.counter}} />
             시작 날짜 : {{ content.pub_date }}
             완료 날짜 : {{ content.exp_date }}
         <li>
@@ -10,11 +11,13 @@
     {% endfor %}
     </ul>
 
-    <li>
-        <form action = "list_add/" method="POST">
-            {% csrf_token %}
-            추가 내용 : <input type="text" name="add_content" value=""/>
-            완료 예정 날짜 : <input type="date" name = "exp_date" value =""/>
-            <input type ="submit" value="submit" />
-        </form>
-    </li>
+    {% if is_checked.checked %}
+        <form action = "index/" method="POST" name = is_checked></form>
+    {% endif %}
+
+    <form action = "list_add/" method="POST">
+        {% csrf_token %}
+        추가 내용 : <input type="text" name="add_content" value=""/>
+        완료 예정 날짜 : <input type="date" name = "exp_date" value =""/>
+        <input type ="submit" value="add" />
+    </form>
