@@ -1,0 +1,14 @@
+<head>
+    <h1>로그인</h1>
+</head>
+
+<body>
+    <form action="/login">
+        {% csrf_token %}
+        ID : <input type="text" name = "input_username"><br>
+        password : <input type="password" name = "input_passwd"><br>
+            <input type="submit" value="로그인" name="login">
+            <input type="submit" value="회원가입" name="register">
+    </form>
+</body>
+

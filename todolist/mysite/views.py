@@ -56,6 +56,15 @@ def list_delete(request):
         messages.add_message(request, messages.INFO, '데이터가 잘못 입력되었습니다.')
         return HttpResponseRedirect('/')
 
+
+def register(request):
+    return render(request, 'mysite/register.html', )
+
+
+def login(request):
+    return render(request, 'mysite/login.html', )
+
+
 # 장고 DB 활용 관련
 # https://brownbears.tistory.com/63
 # https://wayhome25.github.io/django/2017/04/01/django-ep9-crud/

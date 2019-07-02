@@ -1,0 +1,14 @@
+<head>
+    <h1>회원가입</h1>
+</head>
+
+<body>
+    <form action="/register">
+        {% csrf_token %}
+        ID : <input type="text" name = "input_username"><br>
+        password : <input type="password" name = "input_passwd"><br>
+            <input type="submit" value="가입하기">
+            <input type="submit" value="처음으로" name="initialize">
+    </form>
+</body>
+
