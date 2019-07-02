@@ -1,22 +1,23 @@
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponse ,HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from .models import TodoList
 from django.contrib import messages
 
 
 def index(request):
 
-#    if request.method == "POST":
-#        is_check = request.POST.getlist("is_checked")
-#        queryset = TodoList.objects.get(pk=is_check)
-#       queryset.exp_date = datetime.datetime.now()
-#       queryset.save()
+    if request.method == "POST":
+        content_id = request.POST["content_id"]
+        content = TodoList.objects.get(pk=content_id)
+        content.exp_date = datetime.datetime.now()
+        content.is_checked = True
+        content.save()
 
-#    if request.POST.getlist("is_checked[]"):
-#        return HttpResponse("완료!")
-#        is_check = request.POST.getlist("is_checked")
+    # get : DB에 직접 접근하여 해당 결과물을 객체로 가져온 형태
+    # filter : DB에 결과물 조건만 매핑시켜놓고 아직 접근하지 않은 형태
+            # Sql 코드를 짤 준비만 해놓고 아직 컴파일은 하지 않은 상태
 
     # contents_list에 TodoList의 전체 내용을 저장
     contents_list = TodoList.objects.all()
@@ -37,7 +38,10 @@ def list_add(request):
     pub_date = datetime.datetime.now()
     exp_date = request.POST['exp_date']
 
-    TodoList.objects.create(contents=content_name, pub_date=pub_date, exp_date=exp_date)
+    if exp_date:
+        TodoList.objects.create(is_checked=False, contents=content_name, pub_date=pub_date, exp_date=exp_date)
+    else:
+        TodoList.objects.create(is_checked=False, contents=content_name, pub_date=pub_date, exp_date=None)
     messages.add_message(request, messages.INFO, '일정이 추가되었습니다.')
     return HttpResponseRedirect('/')
 
@@ -51,10 +55,9 @@ def list_delete(request):
     else:
         messages.add_message(request, messages.INFO, '데이터가 잘못 입력되었습니다.')
         return HttpResponseRedirect('/')
+
 # 장고 DB 활용 관련
 # https://brownbears.tistory.com/63
 # https://wayhome25.github.io/django/2017/04/01/django-ep9-crud/
 
-# 할 일
-# 1. Django 내장 message 기능을 통해 사용자에게 성공 여부 전달
-# 2. html에서 checkbox 체크가 되면 자동으로 만료일 update 해주기
+# ctrl + / : 주석처리
