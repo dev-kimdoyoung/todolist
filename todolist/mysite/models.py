@@ -1,9 +1,8 @@
 from django.db import models
 
 class User(models.Model):
-    username = models.CharField(max_length=20)
-    passwd = models.CharField(max_length=12)
-
+    username = models.CharField(max_length=20, default=None, null=None)
+    pw = models.CharField(max_length=12, null=None)
 
 class TodoList(models.Model):
     # on_delete = models.CASCADE를 통해 User의 PK가 삭제되면

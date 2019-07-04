@@ -1,9 +1,10 @@
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from .models import TodoList
-from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect
+from .models import TodoList, User
+from django.contrib import messages, auth
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -57,12 +58,44 @@ def list_delete(request):
         return HttpResponseRedirect('/')
 
 
+def logout(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        return render(request, "/")
+
 def register(request):
-    return render(request, 'mysite/register.html', )
+    if request.method == "POST":
+        username = request.POST["username"]
+        pw = request.POST["pw"]
+        user = auth.authenticate(request, username=username, pw=pw)
+        if user is not None:
+            messages.add_message(request, messages.INFO, '이미 존재하는 username입니다.')
+        else:
+            User.objects.create(username=username, passwd=pw)
+            messages.add_message(request, messages.INFO, '회원가입이 완료되었습니다.')
+            return HttpResponse(username)
+
+    return render(request, 'mysite/register.html')
 
 
 def login(request):
-    return render(request, 'mysite/login.html', )
+    if request.method == "POST":
+        username = request.POST["username"]
+        pw = request.POST["pw"]
+
+        # username과 passwd가 맞으면 is_login_session을 True로 DB에 저장하는 작업
+        # 관리자 계정으로 들어가서 username과 passwd가 일치하는 데이터가 있는지 확인
+        user = auth.authenticate(request, username=username, pw=pw)
+
+        # user 데이터가 존재하다면
+        if user is not None:
+            # user로 로그인 요청
+            auth.login(request, user)
+            messages.add_message(request, messages.INFO, '로그인 완료!')
+        else:
+            messages.add_message(request, messages.INFO, 'ID와 비밀번호가 일치하지 않습니다.')
+
+    return render(request, 'mysite/login.html')
 
 
 # 장고 DB 활용 관련
