@@ -13,10 +13,15 @@ def index(request):
         return redirect("login/")
 
     if request.method == "POST":
-        content = TodoList.objects.filter(user=user)
-        content.exp_date = datetime.datetime.now()
-        content.is_checked = True
-        content.save()
+        if request.POST["content_id"] is None:
+            content = TodoList.objects.filter(user=user)
+            content.exp_date = datetime.datetime.now()
+            content.is_checked = True
+        else:
+            content = TodoList.objects.get(pk=request.POST["content_id"])
+            content.exp_date = datetime.datetime.now()
+            content.is_checked = True
+            content.save()
 
     contents_list = TodoList.objects.filter(user=user)
     # context 자료형에 contents_list 객체를 저장
@@ -50,7 +55,7 @@ def list_add(request):
 
 def list_delete(request):
     if request.method == 'POST':
-        pk = TodoList.objects.get(pk=request.POST['delete_content'])
+        pk = TodoList.objects.get(contents=request.POST['delete_content'])
         pk.delete()
         messages.add_message(request, messages.INFO, '데이터가 삭제되었습니다.')
         return redirect('/')
