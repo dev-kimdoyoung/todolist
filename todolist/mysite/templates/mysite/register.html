@@ -3,12 +3,25 @@
 </head>
 
 <body>
-    <form action="/register">
+    <form action="./" method="POST">
         {% csrf_token %}
-        ID : <input type="text" name = "input_username"><br>
-        password : <input type="password" name = "input_passwd"><br>
-            <input type="submit" value="가입하기">
-            <input type="submit" value="처음으로" name="initialize">
+        ID : <input type="text" required name = "username" maxlength="20"/><br>
+        password : <input type="password" required name = "pw" maxlength="12"/><br>
+             <input type="submit" value = "가입하기" />
+    </form>
+
+    <form action="../">
+    <button type="submit" >처음으로</button>
     </form>
 </body>
 
+    <label>
+    상태 :
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </label>

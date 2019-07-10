@@ -1,0 +1,68 @@
+DB 테이블
+1. class User
+ username(이름/FK-todolist class 참조) = CharField(max length = 30)
+ 비밀번호 = passField()
+
+
+2. class todolist
+ username = ForeignKey(User)
+ is_checked = BooleanField()
+ contents = CharField(max_length=100)
+ pub_date = DateTimeField('published_date')
+ exp_date = DateTimeField('expire_date', null=True)
+
+
+
+회원가입
+
+1. register.html
+ 1) 데이터 입력 : 이름[text]=username(Null=False, FK), 비밀번호[password]=passwd(Null=False), 메시지(messages)
+ 2) 데이터 출력 : 가입하기[submit], 처음으로[submit]=initialize
+ 3) 순서도
+  (1) 데이터 입력
+  (2) 조건문(if)
+    - '가입하기'를 누르면, 이름과 비밀번호를 views.py의 register()로 request        - '처음으로'를 누르면, method없는 form을 register()로 request한다
+    - 데이터 입력이 없다면, error 메시지 출력
+  (4) {% if messages %} 리턴된 메시지를 출력
+
+2. def register(request):
+ 1) 데이터 입력 : username(이름, FK), passwd(비밀번호)
+ 2) 데이터 출력 : 가입 완료 메시지, HttpResponseRedirect('/')
+ 3) 순서도
+  (1) 데이터 입력
+  (2) 조건문
+    - if 입력된 이름이 이미 존재하면:
+        message.add(INFO 메시지 : "기존에 가입된 이름입니다. 다른 id를 입력해주세요")
+        return HttpResponseRedirect('/')
+      else:
+        DB에 get.create로 데이터를 입력(이름, 비밀번호)
+        message.add(INFO 메시지 : "가입이 완료되었습니다!")
+        return HttpResponseRedirect('/')
+
+
+로그인
+
+1. login.html
+ 1) 데이터 입력 : 이름[text]=username(Null=False, FK), 비밀번호[password]=passwd(Null=False)
+ 2) 데이터 출력 : 로그인[submit], 회원가입[submit]
+ 3) 순서도
+   (1) 데이터 입력
+   (2) 아이디 비밀번호를 POST method로 login()에 전달
+
+2. login(request):
+ 1) 데이터 입력 : username, passwd
+ 2) 데이터 출력 : 해당 username의 Todolist 출력
+ 3) 순서도
+   (1) html에서 받은 데이터를 username, passwd 변수에 저장
+   (2) user.objects.filter()를 통해 username과 passwd가 맞는지 확인
+   (3) 조건문
+     - 맞는 username과 passwd를 입력했다면 해당 username의 Todolist 출력
+     - 해당 data가 없다면 오류 메시지 출력
+
+로그아웃
+
+1. login.html
+ 1) 데이터 입력 : 로그아웃[submit]
+ 2) 데이터 출력 : 로그아웃 메시지, HttpResponseRedirect(로그인 path)
+
+
