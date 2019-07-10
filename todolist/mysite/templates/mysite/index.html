@@ -1,6 +1,8 @@
+        회원 이름 : {{ user.username }}
+
     <ul>
     {% for content in contents_list %}
-        <form method="POST">
+        <form action="/" method="POST">
             {% csrf_token %}
             <li> 번호 : {{ content.id }}
                 <label> <input type='checkbox' disabled {% if content.is_checked  %}checked{%endif%}/></label>
@@ -15,22 +17,23 @@
     </ul>
 
 
-    <form action = "list_add/" method="POST">
+    <form action = "../list_add/" method="POST">
         {% csrf_token %}
         추가할 내용 : <input type="text" name="add_content" value=""/>
-        마감일 : <input type="date" name="exp_date" value=""/>
+        마감일 : <input type="date" name="exp_date" value="" />
         <input type ="submit" value="add" />
     </form>
 
 
-    <form action = "list_delete/" method="POST">
+    <form action = "../list_delete/" method="POST">
         {% csrf_token %}
         삭제할 내용 : <input type = "text" name="delete_content" value="" />
         <input type ="submit" value="delete" />
     </form>
 
 
-    <form action="logout/" method="POST">
+    <form action="../logout/" method="POST">
+        {% csrf_token %}
         <button type="submit" name="logout">로그아웃</button>
     </form>
 

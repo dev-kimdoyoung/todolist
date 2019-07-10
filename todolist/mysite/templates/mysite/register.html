@@ -5,8 +5,8 @@
 <body>
     <form action="./" method="POST">
         {% csrf_token %}
-        ID : <input type="text" required name = "username" /><br>
-        password : <input type="password" required name = "pw" /><br>
+        ID : <input type="text" required name = "username" maxlength="20"/><br>
+        password : <input type="password" required name = "pw" maxlength="12"/><br>
              <input type="submit" value = "가입하기" />
     </form>
 

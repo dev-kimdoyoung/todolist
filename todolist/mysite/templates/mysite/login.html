@@ -3,15 +3,14 @@
 </head>
 
 <body>
-    <form action="/" method="POST">
+    <form action="../login/" method="POST">
         {% csrf_token %}
-        ID : <input type="text" required name = "username" ><br>
-        password : <input type="password" required name = "pw" ><br>
+        ID : <input type="text" required name = "username" maxlength="20"><br>
+        password : <input type="password" required name = "pw" maxlength="12"><br>
         <input type="submit" value = "로그인" />
-        <input hidden name = "login_hidden" value = "login" />
     </form>
 
-    <form action="register/">
+    <form action="../register/">
         <button type = "submit" >회원가입</button>
     </form>
 </body>
