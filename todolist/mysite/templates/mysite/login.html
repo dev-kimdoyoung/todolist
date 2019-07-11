@@ -1,12 +1,10 @@
-<head>
-    <h1>로그인</h1>
-</head>
+로그인
 
 <body>
     <form action="../login/" method="POST">
         {% csrf_token %}
-        ID : <input type="text" required name = "username" maxlength="20"><br>
-        password : <input type="password" required name = "pw" maxlength="12"><br>
+        <label for="username"> ID : <input type="text" name = "username" maxlength="20" id="username"><br></label>
+        <label for="password"> password : <input type="password" name = "pw" maxlength="12" id="password"><br></label>
         <input type="submit" value = "로그인" />
     </form>
 

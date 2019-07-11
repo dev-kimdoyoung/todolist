@@ -2,7 +2,7 @@ import datetime
 
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from .models import TodoList
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
@@ -45,17 +45,24 @@ def list_add(request):
     exp_date = request.POST['exp_date']
     user = request.user
 
+    if content_name == "":
+        messages.add_message(request, messages.INFO, '추가할 내용을 입력해주세요!')
+        return HttpResponseRedirect("/")
+
     if exp_date:
         TodoList.objects.create(user=user, is_checked=False, contents=content_name, pub_date=pub_date, exp_date=exp_date)
     else:
-        TodoList.objects.create(user=user, is_checked=False, contents=content_name, pub_date=pub_date, exp_date=exp_date)
+        TodoList.objects.create(user=user, is_checked=False, contents=content_name, pub_date=pub_date, exp_date=None)
     messages.add_message(request, messages.INFO, '일정이 추가되었습니다.')
     return HttpResponseRedirect("/")
 
 
 def list_delete(request):
     if request.method == 'POST':
-        pk = TodoList.objects.get(contents=request.POST['delete_content'])
+        if request.POST['delete_content'] == "":
+            messages.add_message(request, messages.INFO, '삭제할 내용을 입력해주세요!')
+            return HttpResponseRedirect("/")
+        pk = TodoList.objects.filter(contents=request.POST['delete_content'])
         pk.delete()
         messages.add_message(request, messages.INFO, '데이터가 삭제되었습니다.')
         return redirect('/')
@@ -68,16 +75,19 @@ def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         pw = request.POST["pw"]
-        user = authenticate(username=username, password=pw)
-
-        if user is not None:
-            messages.add_message(request, messages.INFO, '이미 존재하는 아이디입니다.')
-            return render(request, 'mysite/register.html')
+        if username == "" or pw == "":
+            messages.add_message(request, messages.INFO, '아이디와 비밀번호를 입력해주세요!')
         else:
-            user = User.objects.create_user(username=username, email=None, password=pw)
-            user.save()
-            messages.add_message(request, messages.INFO, '회원가입 완료!!')
-            return render(request, 'mysite/login.html')
+            user = authenticate(username=username, password=pw)
+
+            if user is not None:
+                messages.add_message(request, messages.INFO, '이미 존재하는 아이디입니다.')
+                return render(request, 'mysite/register.html')
+            else:
+                user = User.objects.create_user(username=username, email=None, password=pw)
+                user.save()
+                messages.add_message(request, messages.INFO, '회원가입 완료!!')
+                return render(request, 'mysite/login.html')
 
     return render(request, 'mysite/register.html')
 
@@ -87,14 +97,17 @@ def login(request):
         username = request.POST["username"]
         pw = request.POST["pw"]
 
+        if username == "" or pw == "":
+            messages.add_message(request, messages.INFO, '아이디와 비밀번호를 입력해주세요!')
         # user 데이터가 존재한다면
-        user = authenticate(username=username, password=pw)
-        if user is not None:
-            auth.login(request, user)
-            return redirect('/')
-#            return render(request, 'mysite/index.html/')
         else:
-            messages.add_message(request, messages.INFO, 'ID와 비밀번호가 일치하지 않습니다.')
+            user = authenticate(username=username, password=pw)
+            if user is not None:
+                auth.login(request, user)
+                return redirect('/')
+    #            return render(request, 'mysite/index.html/')
+            else:
+                messages.add_message(request, messages.INFO, 'ID와 비밀번호가 일치하지 않습니다.')
 
     return render(request, 'mysite/login.html')
 
@@ -103,7 +116,7 @@ def logout(request):
     if request.method == "POST":
         auth.logout(request)
         # user 객체를 POST로 받아와야 한다.
-        return render(request, 'mysite/login.html/',)
+        return render(request, 'mysite/login.html/')
 
 # 장고 DB 활용 관련
 # https://brownbears.tistory.com/63

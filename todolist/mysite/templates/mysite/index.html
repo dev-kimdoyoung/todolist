@@ -5,13 +5,14 @@
         <form action="/" method="POST">
             {% csrf_token %}
             <li> 번호 : {{ content.id }}
-                <label> <input type='checkbox' disabled {% if content.is_checked  %}checked{%endif%}/></label>
+                <label for="checked"> <input type='checkbox' disabled {% if content.is_checked  %}checked{%endif%} id="checked"/></label>
                 시작 날짜 : {{ content.pub_date }}
                 완료 날짜 : {{ content.exp_date }}
             </li>
-        내용 : <cite name = "content_text"> {{ content.contents }}</cite>
+        내용 : <cite> {{ content.contents }}</cite>
             <button type="submit" >완료</button>
-            <input hidden name = "content_id" value = "{{content.id}}" />
+
+            <label for="content_id"><input hidden name = "content_id" value = "{{content.id}}" id="content_id"/></label>
         </form>
     {% endfor %}
     </ul>
@@ -19,15 +20,15 @@
 
     <form action = "../list_add/" method="POST">
         {% csrf_token %}
-        추가할 내용 : <input type="text" name="add_content" value=""/>
-        마감일 : <input type="date" name="exp_date" value="" />
+        추가할 내용 : <label for="add_content"><input type="text" name="add_content" value="" id="add_content"/></label>
+        마감일 : <label><input type="date" name="exp_date" value="" /></label>
         <input type ="submit" value="add" />
     </form>
 
 
     <form action = "../list_delete/" method="POST">
         {% csrf_token %}
-        삭제할 내용 : <input type = "text" name="delete_content" value="" />
+        삭제할 내용 : <label for="delete_content"><input type = "text" name="delete_content" value="" id="delete_content" /></label>
         <input type ="submit" value="delete" />
     </form>
 
