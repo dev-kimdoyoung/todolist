@@ -38,14 +38,11 @@
         <button type="submit" name="logout">로그아웃</button>
     </form>
 
-    <label>
-    상태 :
-    {% if messages %}
-        <ul class="messages">
+상태 :
+{% if messages %}
+    <ul class="messages">
         {% for message in messages %}
-        <li>{{ message }}</li>
+            <li>{{ message }}</li>
         {% endfor %}
-        </ul>
-    {% endif %}
-    </label>
-
+    </ul>
+{% endif %}
