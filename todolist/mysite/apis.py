@@ -19,7 +19,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class TodoListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TodoList
-        fields = ['user', 'contents', 'pub_date', 'exp_date', 'is_checked']
+        fields = ['url', 'user', 'contents', 'pub_date', 'exp_date', 'is_checked']
 
 
 # User CRUD 정의
