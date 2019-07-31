@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -8,5 +10,5 @@ class TodoList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, )
     is_checked = models.BooleanField()
     contents = models.CharField(max_length=100)
-    pub_date = models.DateTimeField('published_date')
+    pub_date = models.DateTimeField('published_date', default=datetime.datetime.now())
     exp_date = models.DateTimeField('expire_date', null=True, blank=True)

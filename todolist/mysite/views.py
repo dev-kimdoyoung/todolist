@@ -1,11 +1,19 @@
 import datetime
 
+# models import
+from .models import TodoList
+
+# Django import
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from .models import TodoList
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+
+# Django RESTful Framework import
+from rest_framework import viewsets
+from .apis import UserSerializer, TodoListSerializer
+
 
 def index(request):
     user = request.user
@@ -118,8 +126,14 @@ def logout(request):
         # user 객체를 POST로 받아와야 한다.
         return render(request, 'mysite/login.html/')
 
-# 장고 DB 활용 관련
-# https://brownbears.tistory.com/63
-# https://wayhome25.github.io/django/2017/04/01/django-ep9-crud/
 
-# ctrl + / : 주석처리
+# User class 정의
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+
+
+# TodoList class 정의
+class TodoListViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('user')
+    serializer_class = TodoListSerializer
