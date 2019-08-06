@@ -15,6 +15,7 @@ from rest_framework import viewsets
 from .apis import UserSerializer, TodoListSerializer
 
 
+# default page
 def index(request):
     user = request.user
     if user.id is None:
@@ -34,15 +35,16 @@ def index(request):
     contents_list = TodoList.objects.filter(user=user)
     # context 자료형에 contents_list 객체를 저장
     context = {
-            'contents_list': contents_list
+        'contents_list': contents_list
     }
     # index.html 파일에 context를 rendering
     return render(request, 'mysite/index.html', context)
     # get : DB에 직접 접근하여 해당 결과물을 객체로 가져온 형태
     # filter : DB에 결과물 조건만 매핑시켜놓고 아직 접근하지 않은 형태
-            # Sql 코드를 짤 준비만 해놓고 아직 컴파일은 하지 않은 상태
+    # Sql 코드를 짤 준비만 해놓고 아직 컴파일은 하지 않은 상태
     # filter는 list를 return하고, get은 한 개의 객체를 return한다.
     # contents_list에 TodoList의 전체 내용을 저장
+
 
 def list_add(request):
     # request.POST에 html에서 http 메소드 중 POST로 <form> 안의 데이터를 전달할 때
