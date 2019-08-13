@@ -1,5 +1,5 @@
 /todolist/모르는 내용
 /todolist/db.sqlite3
 /todolist/practice_job_processing
-./Dockerfile
-./docker-compose.yml
+Dockerfile
+docker-compose.yml
