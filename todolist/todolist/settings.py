@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,9 +25,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*xvl_8&x5b^&rr+%-c^(%&y1tzhp30j_ek0)5orta0mx+xx!p9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG 설정을 하면 에러가 발생할 때, 온갖 정보가 뜨기 떄문에 해킹당할 위험성이 높아진다.
+# 따라서, production 단계에서는 DEBUG 모드를 사용하면 안된다.
 DEBUG = True
 
-#ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 ALLOWED_HOSTS = '*'
 
 # Application definition
@@ -75,11 +79,13 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+default_database_url = dj_database_url.parse(os.environ['DB_URL'])
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': default_database_url
+    # 여기서 Master-Slave 구조를 사용할 수 있다.
+    # master : (master DB)
+    # slave : (slave DB)
 }
 
 
@@ -104,8 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # REST framework를 정의
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE' : 10
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
 }
 
 

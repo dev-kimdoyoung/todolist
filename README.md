@@ -7,5 +7,7 @@
   3) flake8을 통해 코드 컨벤션을 검사하는 방법 연습
   4) pipenv를 통한 프로젝트에 사용되는 패키지 의존성 관리 위임 적용하기
 
-#### 4. 기여자 : develop_kimdoyoung@naver.com [github 프로필 주소](https://github.com/develop-kimdoyoung )
+#### 4. 기여자 : 
+1) 이메일 : develop_kimdoyoung@naver.com 
+2) [github 프로필 주소](https://github.com/develop-kimdoyoung )
 #### 5. 실행방법 - dcokerizing 이후 작성 예정

@@ -1,4 +1,3 @@
-import datetime
 
 # Todolist DB import
 from .models import TodoList

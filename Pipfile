@@ -11,6 +11,7 @@ djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
 flake8 = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.6"
