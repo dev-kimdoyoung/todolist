@@ -129,6 +129,8 @@ def logout(request):
         return render(request, 'mysite/login.html/')
 
 
+# REST API 문서화 작업
+
 # User class 정의
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
