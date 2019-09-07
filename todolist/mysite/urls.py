@@ -5,9 +5,10 @@ from rest_framework import routers
 from .apis import UserViewSet, TodoListViewSet
 
 
-# routers : 장고에서 사용하는 urls
+# routers : 장고에서 사용하는 url
 # DefaultRouter() : URL conf
-router=routers.DefaultRouter()
+# REST API 경로 설정
+router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'TodoList', TodoListViewSet)
 
