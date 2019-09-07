@@ -129,7 +129,7 @@ def logout(request):
         return render(request, 'mysite/login.html/')
 
 
-# REST API 문서화 작업
+# REST API 문서화 작업(json)
 
 # User class 정의
 class UserViewSet(viewsets.ModelViewSet):
