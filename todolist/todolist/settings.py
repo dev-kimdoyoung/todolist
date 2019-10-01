@@ -133,3 +133,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# Django에서 static 파일(= html, css, javascript 등 외부에서 참조해서 다운받아서 사용해야 하는 파일)들을 모아준다.
+# 보통 static(=resource) 폴더를 가지고 있다.
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
