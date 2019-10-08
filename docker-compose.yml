@@ -24,3 +24,4 @@ services:
       MYSQL_USER: kimdoyoung
       MYSQL_PASSWORD: 01022074992
       MYSQL_DATABASE: mysql
+      MYSQL_ROOT_PASSWORD: 01022074992
