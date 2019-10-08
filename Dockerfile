@@ -26,4 +26,4 @@ ENV DB_URL mysql://kimdoyoung:01022074992@db:3306/todolist
 
 EXPOSE 8000
 ENTRYPOINT ["python"]
-CMD ["manage.py", "runserver", "0.0.0.0"]
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]
