@@ -2,7 +2,7 @@
 # 보통 개발용, 테스트용, 프로덕션용 3가지로 사용
 
 # docker-compose 파일 버전을 명시
-version : "3.7"
+version : "3"
 
 # 컨테이너의 목록을 정의
 services:
