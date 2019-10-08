@@ -19,7 +19,7 @@ services:
       DB_URL: mysql://kimdoyoung:01022074992@db:3306/todolist
 
   db:
-    image: mysql
+    image: mysql:5.7
     environment:
       MYSQL_USER: kimdoyoung
       MYSQL_PASSWORD: 01022074992
