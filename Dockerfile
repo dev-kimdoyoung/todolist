@@ -22,7 +22,7 @@ RUN pip install -r /meta/requirements.txt
 # 보통 ENV(환경변수 설정) 명령어는
 # 프로토콜://USER:PASSWORD@HOST:PORT/NAME
 # 3306이 MySQL의 표준 포트이고, Django의 경우 NAME은 프로젝트 이름으로 한다.
-ENV DB_URL mysql://kimdoyoung:01022074992@db:3306/todolist
+ENV DB_URL mysql://kimdoyoung:01022074992@localhost:3306/todolist
 
 EXPOSE 8000
 ENTRYPOINT ["python"]
